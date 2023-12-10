@@ -1,0 +1,32 @@
+TASK 4
+
+
+def train(EPOCHS = 5, BATCH_SIZE = 32, TRAIN_FILE = 'train.csv', VAL_FILE = 'test.csv'):
+	WORKING_DIR = os.getcwd()
+
+	print("loading training/validation data...")
+
+	y_train, x_train = load_dataset(TRAIN_FILE, 	num_samples = 100000)
+	
+	y_val, x_val = load_dataset(VAL_FILE, 	num_samples 	= 10000)
+
+	print("Training the model ...")
+	
+	model = get_model()
+	model.fit(x_train, y_train, batch_size = 	BATCH_SIZE, epochs = EPOCHS, verbose = 1,
+	validation_data = (x_val, y_val),
+	callbacks = 	[tf.keras.callbacks.ModelCheckpoint(os.path.jo	in(WORKING_DIR, 'model_checkpoint'), monitor = 	'val_loss', verbose = 1, save_best_model =	True,
+	save_weigths_only = False,
+	mode = 'auto')])
+	
+	return model
+
+Task5: train and xport
+
+def export_model(model, base_path = 'amazon_review/'):
+	#save model at thime that was saved
+	path = os.path.join(base_path, 	str(int(time.time())))
+	tf.save_model.save(model, path)
+if __name__ == '__main__':
+	model = train()
+	export_model(model)
